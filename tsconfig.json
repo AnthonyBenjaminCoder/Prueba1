@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+      "rootDir": "src",
+      "outDir": "dist",
+      "lib": ["es2022"],
+      "target": "es2022",
+      "module": "NodeNext",
+      "moduleResolution": "nodenext",
+      "esModuleInterop": true,
+      "types": ["node"],
+      "typeRoots": [
+          "node_modules/@types",
+          "types"
+      ],
+      "forceConsistentCasingInFileNames": true,
+      "strict": true,
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "baseUrl": "./src",
+      "paths": {
+          "#services/*": ["services/*"],
+          "#root/*": ["./*"],
+          "#core/*": ["core/*"],
+          "#repositories/*": ["repositories/*"]
+      },
+      "allowJs": true // Add this line to include .js files
+  },
+  "include": ["src/**/*", "types"],
+  "exclude": [
+    "node_modules", 
+    "dist"
+  ]
+}
