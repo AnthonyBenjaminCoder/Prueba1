@@ -1,6 +1,8 @@
 import express, { Request, Response } from 'express';
 import mongoose, { Schema, Document } from "mongoose";
 import usersRoutes from './routes/route.js';
+import placeRoutes from './routes/placeRoutes.js';
+
 const app = express();
 const port = 3000;
 
@@ -10,6 +12,7 @@ mongoose.connect('mongodb://admin:3Lc9wDlaBdYJtcdZQ8WPpBpWs@yellowdino.mooo.com:
 
 app.use(express.json());
 app.use('/users', usersRoutes); // Usa el router
+app.use('/places', placeRoutes);
 
 app.listen(port, () => {
   console.log(`Servidor escuchando en http://localhost:${port}`);
