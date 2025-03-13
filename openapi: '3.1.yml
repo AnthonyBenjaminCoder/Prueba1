@@ -1,0 +1,235 @@
+openapi: 3.0.0
+info:
+  title: API de Mi Proyecto
+  version: "1.0.0"
+  description: Documentación de la API que incluye endpoints para usuarios y lugares.
+servers:
+  - url: http://localhost:3000
+    description: Servidor de desarrollo
+
+paths:
+  /users:
+    get:
+      summary: Obtener todos los usuarios
+      description: Retorna una lista de todos los usuarios registrados.
+      responses:
+        '200':
+          description: Éxito al obtener los usuarios.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        '500':
+          description: Error interno al obtener los usuarios.
+    post:
+      summary: Crear un nuevo usuario
+      description: Crea un nuevo usuario con la información proporcionada.
+      requestBody:
+        description: Objeto usuario a crear.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuario creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Error al crear el usuario.
+    put:
+      summary: Actualizar usuario por email
+      description: Actualiza los datos de un usuario existente basado en su email.
+      parameters:
+        - in: path
+          name: email
+          required: true
+          description: Email del usuario a actualizar.
+          schema:
+            type: string
+      requestBody:
+        description: Objeto usuario con los datos actualizados.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Usuario actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Usuario no encontrado.
+        '500':
+          description: Error interno al actualizar el usuario.
+    delete:
+      summary: Eliminar usuario por email
+      description: Elimina un usuario basado en su email.
+      parameters:
+        - in: path
+          name: email
+          required: true
+          description: Email del usuario a eliminar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuario eliminado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: "Usuario eliminado exitosamente"
+                  usuario:
+                    $ref: '#/components/schemas/User'
+        '404':
+          description: Usuario no encontrado.
+        '500':
+          description: Error interno al eliminar el usuario.
+
+  /places:
+    get:
+      summary: Obtener todos los lugares
+      description: Retorna una lista de todos los lugares (places) registrados.
+      responses:
+        '200':
+          description: Éxito al obtener los lugares.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Place'
+        '500':
+          description: Error interno al obtener los lugares.
+    post:
+      summary: Crear un nuevo lugar
+      description: Crea un nuevo lugar con la información proporcionada.
+      requestBody:
+        description: Objeto lugar a crear.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        '201':
+          description: Lugar creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        '400':
+          description: Error al crear el lugar.
+    put:
+      summary: Actualizar lugar por nombre
+      description: Actualiza los datos de un lugar existente basado en su nombre.
+      parameters:
+        - in: path
+          name: name
+          required: true
+          description: Nombre del lugar a actualizar.
+          schema:
+            type: string
+      requestBody:
+        description: Objeto lugar con los datos actualizados.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Place'
+      responses:
+        '200':
+          description: Lugar actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Place'
+        '404':
+          description: Lugar no encontrado.
+        '500':
+          description: Error interno al actualizar el lugar.
+    delete:
+      summary: Eliminar lugar por nombre
+      description: Elimina un lugar basado en su nombre.
+      parameters:
+        - in: path
+          name: name
+          required: true
+          description: Nombre del lugar a eliminar.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lugar eliminado exitosamente.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensaje:
+                    type: string
+                    example: "Lugar eliminado exitosamente"
+                  lugar:
+                    $ref: '#/components/schemas/Place'
+        '404':
+          description: Lugar no encontrado.
+        '500':
+          description: Error interno al eliminar el lugar.
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - nombre
+        - apellido
+        - email
+        - ciudad
+      properties:
+        nombre:
+          type: string
+          example: "Juan"
+        apellido:
+          type: string
+          example: "Pérez"
+        email:
+          type: string
+          format: email
+          example: "juan.perez@example.com"
+        ciudad:
+          type: string
+          enum: ["Madrid", "Barcelona", "Bilbao", "Málaga"]
+          example: "Madrid"
+
+    Place:
+      type: object
+      required:
+        - nombre
+        - estado
+        - ciudad
+        - codigoPostal
+      properties:
+        nombre:
+          type: string
+          example: "Central Park"
+        estado:
+          type: string
+          example: "NY"
+        ciudad:
+          type: string
+          example: "Nueva York"
+        codigoPostal:
+          type: string
+          example: "10022"
