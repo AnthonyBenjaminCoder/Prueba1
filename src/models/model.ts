@@ -34,6 +34,6 @@ const placeSchema: Schema = new Schema({
 
 // Modelo de Usuario
   export const UserModel = mongoose.model<iuser>("users", userSchema);
-  export const placeModel = mongoose.model<place>("users", placeSchema);
+  export const placeModel = mongoose.model<place>("places", placeSchema);
 
 //_v1 para asegurarse de que una operación de actualización no sobrescriba cambios recientes hechos por otra operación.
