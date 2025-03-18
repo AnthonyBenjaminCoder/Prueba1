@@ -49,4 +49,15 @@ export const deleteUserByEmail = async (req, res) => {
         res.status(500).json({ error: "Error al eliminar el usuario" });
     }
 };
+export const createNewUser = async (req, res) => {
+    const { nombre, apellido, email, ciudad } = req.body;
+    try {
+        const newUser = new UserModel({ nombre, apellido, email, ciudad });
+        const savedUser = await newUser.save();
+        res.status(201).json(savedUser);
+    }
+    catch (error) {
+        res.status(400).json({ error: "Error al crear el usuario" });
+    }
+};
 //# sourceMappingURL=controller.js.map
